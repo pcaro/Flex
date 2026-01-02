@@ -1,15 +1,39 @@
-{% if PLUGINS and ('tipue_search' in PLUGINS or 'pelican.plugins.tipue_search' in PLUGINS) %}
 {% extends 'base.html' %}
 {% block title %}{{ _('Search') }} - {{ SITENAME|striptags }}{% endblock title %}
-{% block content %}
 
+{% block head %}
+{{ super() }}
+{% if PLUGINS and ('search' in PLUGINS or 'pelican.plugins.search' in PLUGINS) %}
+<link rel="stylesheet" href="https://files.stork-search.net/releases/v{{ STORK_VERSION or '1.6.0' }}/basic.css" />
+{% endif %}
+{% endblock head %}
+
+{% block content %}
 <article class="single">
   <header>
-    <h1 id="categories">{{ _('Search Results') }}</h1>
+    <h1 id="search-title">{{ _('Search') }}</h1>
   </header>
+
+  {% if PLUGINS and ('search' in PLUGINS or 'pelican.plugins.search' in PLUGINS) %}
+  <div class="stork-wrapper">
+    <input data-stork="sitesearch" class="stork-input" placeholder="Search articles..." />
+    <div data-stork="sitesearch-output" class="stork-output"></div>
+  </div>
+  {% elif PLUGINS and ('tipue_search' in PLUGINS or 'pelican.plugins.tipue_search' in PLUGINS) %}
   <div id="tipue_search_content"></div>
+  {% else %}
+  <p>Search functionality is not enabled.</p>
+  {% endif %}
 </article>
-{% endblock content %} {% block additional_js %}
+{% endblock content %}
+
+{% block additional_js %}
+{% if PLUGINS and ('search' in PLUGINS or 'pelican.plugins.search' in PLUGINS) %}
+<script src="https://files.stork-search.net/releases/v{{ STORK_VERSION or '1.6.0' }}/stork.js"></script>
+<script>
+  stork.register("sitesearch", "{{ SITEURL }}/search-index.st");
+</script>
+{% elif PLUGINS and ('tipue_search' in PLUGINS or 'pelican.plugins.tipue_search' in PLUGINS) %}
 <script src="{{ SITEURL }}/{{ THEME_STATIC_DIR }}/tipuesearch/jquery.min.js"></script>
 <script src="{{ SITEURL }}/{{ THEME_STATIC_DIR }}/tipuesearch/tipuesearch.min.js"></script>
 <script src="{{ SITEURL }}/{{ THEME_STATIC_DIR }}/tipuesearch/tipuesearch_set.min.js"></script>
@@ -23,4 +47,5 @@
     });
   });
 </script>
-{% endblock %} {% endif %}
+{% endif %}
+{% endblock %}
