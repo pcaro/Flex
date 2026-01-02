@@ -9,11 +9,9 @@
 
   {% if PLUGINS and ('search' in PLUGINS or 'pelican.plugins.search' in PLUGINS) %}
   <div class="stork-wrapper-dark">
-    <input data-stork="sitesearch" class="stork-input" placeholder="Search articles..." />
-    <div data-stork="sitesearch-output" class="stork-output"></div>
+    <input class="stork-input" type="text" autocomplete="off" name="q" data-stork="sitesearch-page" placeholder="Search articles..." onclick="loadStorkIndex()" />
+    <div class="stork-output" data-stork="sitesearch-page-output"></div>
   </div>
-  {% elif PLUGINS and ('tipue_search' in PLUGINS or 'pelican.plugins.tipue_search' in PLUGINS) %}
-  <div id="tipue_search_content"></div>
   {% else %}
   <p>Search functionality is not enabled.</p>
   {% endif %}
@@ -21,26 +19,4 @@
 {% endblock content %}
 
 {% block additional_js %}
-{% if PLUGINS and ('search' in PLUGINS or 'pelican.plugins.search' in PLUGINS) %}
-<script>
-  // Load Stork index when page loads (not onclick)
-  if (typeof loadStorkIndex === 'function') {
-    loadStorkIndex();
-  }
-</script>
-{% elif PLUGINS and ('tipue_search' in PLUGINS or 'pelican.plugins.tipue_search' in PLUGINS) %}
-<script src="{{ SITEURL }}/{{ THEME_STATIC_DIR }}/tipuesearch/jquery.min.js"></script>
-<script src="{{ SITEURL }}/{{ THEME_STATIC_DIR }}/tipuesearch/tipuesearch.min.js"></script>
-<script src="{{ SITEURL }}/{{ THEME_STATIC_DIR }}/tipuesearch/tipuesearch_set.min.js"></script>
-<script src="{{ SITEURL }}/tipuesearch_content.js"></script>
-<script>
-  $(document).ready(function () {
-    $("#tipue_search_input").tipuesearch({
-      show: 10,
-      mode: "json",
-      contentLocation: "{{ SITEURL }}/tipuesearch_content.js",
-    });
-  });
-</script>
-{% endif %}
 {% endblock %}
