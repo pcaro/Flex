@@ -4,7 +4,7 @@
 {% block head %}
 {{ super() }}
 {% if PLUGINS and ('search' in PLUGINS or 'pelican.plugins.search' in PLUGINS) %}
-<link rel="stylesheet" href="https://files.stork-search.net/releases/v{{ STORK_VERSION or '1.6.0' }}/basic.css" />
+<link rel="stylesheet" href="https://files.stork-search.net/releases/v{{ STORK_VERSION or '1.6.0' }}/dark.css" />
 {% endif %}
 {% endblock head %}
 
@@ -15,7 +15,7 @@
   </header>
 
   {% if PLUGINS and ('search' in PLUGINS or 'pelican.plugins.search' in PLUGINS) %}
-  <div class="stork-wrapper">
+  <div class="stork-wrapper-dark">
     <input data-stork="sitesearch" class="stork-input" placeholder="Search articles..." />
     <div data-stork="sitesearch-output" class="stork-output"></div>
   </div>
