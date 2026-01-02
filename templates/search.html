@@ -1,13 +1,6 @@
 {% extends 'base.html' %}
 {% block title %}{{ _('Search') }} - {{ SITENAME|striptags }}{% endblock title %}
 
-{% block head %}
-{{ super() }}
-{% if PLUGINS and ('search' in PLUGINS or 'pelican.plugins.search' in PLUGINS) %}
-<link rel="stylesheet" href="https://files.stork-search.net/releases/v{{ STORK_VERSION or '1.6.0' }}/dark.css" />
-{% endif %}
-{% endblock head %}
-
 {% block content %}
 <article class="single">
   <header>
