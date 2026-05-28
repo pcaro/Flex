@@ -1,22 +1,28 @@
-{% extends 'base.html' %}
-{% block title %}{{ _('Search') }} - {{ SITENAME|striptags }}{% endblock title %}
-
-{% block content %}
+{% extends 'base.html' %} {% block title %}{{ _('Search') }} - {{
+SITENAME|striptags }}{% endblock title %} {% block content %}
 <article class="single">
   <header>
     <h1 id="search-title">{{ _('Search') }}</h1>
   </header>
 
-  {% if PLUGINS and ('search' in PLUGINS or 'pelican.plugins.search' in PLUGINS) %}
+  {% if PLUGINS and ('search' in PLUGINS or 'pelican.plugins.search' in PLUGINS)
+  %}
   <div class="stork-wrapper-dark">
-    <input class="stork-input" type="text" autocomplete="off" name="q" data-stork="sitesearch-page" placeholder="Search articles..." onclick="loadStorkIndex()" />
+    <label for="page-search" class="sr-only">{{ _('Search articles') }}</label>
+    <input
+      id="page-search"
+      class="stork-input"
+      type="text"
+      autocomplete="off"
+      name="q"
+      data-stork="sitesearch-page"
+      placeholder="Search articles..."
+      onclick="loadStorkIndex()"
+    />
     <div class="stork-output" data-stork="sitesearch-page-output"></div>
   </div>
   {% else %}
   <p>Search functionality is not enabled.</p>
   {% endif %}
 </article>
-{% endblock content %}
-
-{% block additional_js %}
-{% endblock %}
+{% endblock content %} {% block additional_js %} {% endblock %}

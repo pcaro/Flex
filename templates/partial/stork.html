@@ -11,15 +11,20 @@
         return;
       }
       if (typeof stork === 'undefined') {
-        console.error('Stork is not loaded yet, retrying...');
         setTimeout(window.loadStorkIndex, 100);
         return;
       }
       {% if not STORK_VERSION %}
       stork.initialize("{{ SITEURL }}/{{ THEME_STATIC_DIR }}/stork/stork.wasm")
       {% endif %}
-      stork.register("sitesearch", "{{ SITEURL }}/search-index.st", { showProgress: false });
-      stork.register("sitesearch-page", "{{ SITEURL }}/search-index.st", { showProgress: false });
+      var url = "{{ SITEURL }}/search-index.st";
+      var opts = { showProgress: false };
+      stork.register("sitesearch", url, opts);
+      try {
+        stork.register("sitesearch-page", url, opts);
+      } catch (e) {
+        // Search page input not in DOM on this page — index still registered
+      }
       window.storkIndexLoaded = true;
     }
   </script>
